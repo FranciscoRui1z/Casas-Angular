@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
 import { Housinglocation } from '../housinglocation';
+import { HomeForm } from '../formulario/formulario';
 import { HousingService } from '../housing.service';
 
 @Component({
@@ -16,6 +17,7 @@ import { HousingService } from '../housing.service';
       <form>
         <input type="text" placeholder="Filter by city" #filter>
         <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
+        <a href="formulario.ts">Work</a>
       </form>
     </section>
     <section class="results">
@@ -48,4 +50,5 @@ export class HomeComponent {
       housingLocation => housingLocation?.city.toLowerCase().includes(text.toLowerCase())
     );
   }
+ 
 }
