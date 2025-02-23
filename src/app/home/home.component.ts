@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
 import { Housinglocation } from '../housinglocation';
 import { HomeForm } from '../formulario/formulario';
 import { HousingService } from '../housing.service';
+import { DataService } from '../DataService';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,7 @@ import { HousingService } from '../housing.service';
       <form>
         <input type="text" placeholder="Filter by city" #filter>
         <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
-        <a href="formulario.ts">Work</a>
+        <a  href="/formulario">FORMULARIO</a>
       </form>
     </section>
     <section class="results">
@@ -30,7 +31,7 @@ import { HousingService } from '../housing.service';
   styleUrls: ['./home.component.css'],
 })
 
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   housingLocationList: Housinglocation[] = [];
   housingService: HousingService = inject(HousingService);
   filteredLocationList: Housinglocation[] = [];
@@ -40,6 +41,11 @@ export class HomeComponent {
       this.filteredLocationList = housingLocationList;
     });
   }
+
+  ngOnInit() {
+    this.muestraBienvenida();
+  }
+
   filterResults(text: string) {
     if (!text) {
       this.filteredLocationList = this.housingLocationList;
@@ -50,5 +56,12 @@ export class HomeComponent {
       housingLocation => housingLocation?.city.toLowerCase().includes(text.toLowerCase())
     );
   }
- 
+
+  muestraBienvenida() {
+    const dataService: DataService = inject(DataService);
+    const userData = dataService.getFormData();
+
+    const { filter1, filter2, edad, filter4, filter5 } = userData;
+    window.alert(`BIENVENIDO: ${filter1} ${filter2} ${edad} ${filter4}`);
+  }
 }
